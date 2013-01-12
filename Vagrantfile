@@ -59,8 +59,7 @@ Vagrant::Config.run do |config|
   config.vm.share_folder "cache", guest_cache_path, host_cache_path
 
   # Mkae a shared www folder
-  config.vm.share_folder "v-data", "/etc/apache2/htdocs", "./www"
-  config.vm.share_folder "v-data", "/var/cache/apt", "./apt-cache"
+  config.vm.share_folder "v-data", "/var/www", "./www"
 
   config.ssh.max_tries = 40
   config.ssh.timeout   = 120
