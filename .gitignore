@@ -1,0 +1,14 @@
+.vagrant
+Berksfile.lock
+Gemfile.lock
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+/cookbooks
+*.pem
+.cache
+www
+apt-cache
