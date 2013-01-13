@@ -1,0 +1,2 @@
+# looking into backing up the chef server
+#http://fnichol.github.com/knife-server/
