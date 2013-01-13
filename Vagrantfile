@@ -9,8 +9,8 @@ guest_cache_path = "/tmp/vagrant-cache"
 FileUtils.mkdir(host_cache_path) unless File.exist?(host_cache_path)
 
 Vagrant::Config.run do |config|
-  #config.vm.customize ["modifyvm", :id, "--cpus", 2]
-  #config.vm.customize ["modifyvm", :id, "--memory", 1024]
+  config.vm.customize ["modifyvm", :id, "--cpus", 2]
+  config.vm.customize ["modifyvm", :id, "--memory", 1024]
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -71,23 +71,18 @@ Vagrant::Config.run do |config|
     chef.provisioning_path = guest_cache_path
 
     chef.json = {
-       :chef_server => {
-          :server_url =>"http://localhost.localdomain:4000",
-          :webui_enabled => true,
-          :web_ui_admin_default_password => "p@sswOrd1",
+      "chef-server" => {
+        "version" => :latest,
+        "prereleases" => true,
+        "nightlies" => true
        },
-      :chefpem => {
-          'path' => '/etc/chef',
-      },
       "apache" => {
         :listen_ports => ["8080"],
       }
     }
 
     chef.run_list = [
-      "recipe[apt::default]",
-      "recipe[build-essential::default]",
-      "recipe[chef-server::rubygems-install]",
+      "recipe[chef-server::default]",
       "recipe[iptables::disabled]",
       "recipe[openssh]",
       "recipe[apache2]",
