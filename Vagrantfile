@@ -60,6 +60,7 @@ Vagrant::Config.run do |config|
 
   # Mkae a shared www folder
   config.vm.share_folder "v-data", "/var/www", "./www"
+  config.vm.share_folder "v-data", "/squid", "./squid"
 
   config.ssh.max_tries = 40
   config.ssh.timeout   = 120
@@ -86,6 +87,7 @@ Vagrant::Config.run do |config|
 
     chef.run_list = [
       "recipe[apt::default]",
+      "recipe[apt::cacher-ng]",
       "recipe[build-essential::default]",
       "recipe[chef-server::rubygems-install]",
       "recipe[iptables::disabled]",
