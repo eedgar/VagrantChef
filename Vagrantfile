@@ -28,8 +28,7 @@ Vagrant::Config.run do |config|
 
   config.vm.host_name = "chef-server-berkshelf"
 
-  config.vm.box = "ubuntu-12.04.1-server-amd64"
-  config.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/boxes/opscode-ubuntu-12.04.box"
+  config.vm.box = "ubuntu-12.10-server-amd64"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
@@ -49,9 +48,9 @@ Vagrant::Config.run do |config|
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
   #config.vm.forward_port 80, 8080
-  config.vm.forward_port 4000, 4000
-  config.vm.forward_port 4040, 4040
+  config.vm.forward_port 8443, 8443
   config.vm.forward_port 80, 8080
+  config.vm.forward_port 8081, 8081
 
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
@@ -72,10 +71,13 @@ Vagrant::Config.run do |config|
 
     chef.json = {
       "chef-server" => {
-        "version" => :latest,
-        "prereleases" => true,
-        "nightlies" => true
-       },
+          "configuration" => {
+               "nginx" => {
+                  "enable_non_ssl" => "true",
+                  "non_ssl_port" => "8081",
+               }
+           }
+      },
       "apache" => {
         :listen_ports => ["8080"],
       }
